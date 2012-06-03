@@ -18,7 +18,11 @@ import org.json.JSONObject;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,14 +42,38 @@ public class EpuActivity extends ListActivity {
   private String retrivedJSONTags;
   private ProgressDialog loading;
 
+  private Double longi;
+  private Double lati;
+  
   public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
-	loading = new ProgressDialog(this);
-	loading.setTitle("Loading ...");
+	loading = new ProgressDialog(this); 
+	loading.setTitle("Loading ..."); 
 	loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 	
 	initializeTagList();
-	
+	// Acquire a reference to the system Location Manager
+	LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+	Log.i("EPU","Provider: "+locationManager.getProviders(true));
+	// Define a listener that responds to location updates
+	LocationListener locationListener = new LocationListener() {
+	    public void onLocationChanged(Location location) {
+	      // Called when a new location is found by the network location provider.
+	      longi = location.getLongitude()*1E6;
+	      lati = location.getLatitude()*1E6;
+	      Log.i("EPU","Location: "+longi);
+	      Log.i("EPU","Location: "+lati);
+	    }
+
+	    public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+	    public void onProviderEnabled(String provider) {}
+
+	    public void onProviderDisabled(String provider) {}
+	  };
+
+	// Register the listener with the Location Manager to receive location updates
+	locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 //	loading();
   }
 
@@ -76,6 +104,7 @@ public class EpuActivity extends ListActivity {
 
   private void loading() {
 	try {
+//	  Log.i("EPU JSON", retriveTags());
 	  JSONObject jsonArray = new JSONObject(retrivedJSONTags);
 	  Log.i("EPU", "START");
 	  JSONArray array = new JSONArray(jsonArray.getString("tags"));
@@ -92,6 +121,7 @@ public class EpuActivity extends ListActivity {
 	  // e.printStackTrace();
 	  Toast.makeText(getApplicationContext(), "Errore " + e, Toast.LENGTH_LONG)
 		  .show();
+	  e.printStackTrace();
 	  Log.i("EPU", "ERRORE: " + e.toString());
 	}
   }
@@ -102,11 +132,12 @@ public class EpuActivity extends ListActivity {
    * @return the json formatted tags page
    */
   private String retriveTags() {
-
+	String hq_host = "http://192.168.1.235:9000/tags";
+//	String hq_host = "http://fmsweng.disi.unitn.it/tropos/json.php";
+	
 	StringBuilder builder = new StringBuilder();
 	HttpClient client = new DefaultHttpClient();
-	HttpGet httpGet = new HttpGet(
-		"http://fmsweng.disi.unitn.it/tropos/json.php");
+	HttpGet httpGet = new HttpGet(hq_host);
 	try {
 	  HttpResponse response = client.execute(httpGet);
 	  StatusLine statusLine = response.getStatusLine();
@@ -162,8 +193,12 @@ public class EpuActivity extends ListActivity {
 	// call the camera activity with the string tag
 	String label = this.getListAdapter().getItem(position).toString();
 	Log.i("EPU", ""+label);
-	Intent camera = new Intent(this,EpuMaps.class);
+//	Intent camera = new Intent(this,EpuMaps.class);
+	Intent camera = new Intent(this,EpuReport.class);
 //	camera.putExtra("label", label);
+	camera.putExtra("lati", lati);
+	camera.putExtra("longi", longi);
+	
 	startActivity(camera);
 	super.onListItemClick(l, v, position, id);
 	}
