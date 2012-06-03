@@ -36,8 +36,8 @@ public class EpuMaps extends MapActivity {
 	mapOverlays = mapView.getOverlays();
 	drawable = this.getResources().getDrawable(R.drawable.ic_launcher);
 //	Bitmap btm = BitmapFactory.decodeFile("/sdcard/img.jpg");
-	TextView mmmg = (TextView)findViewById(R.id.description);
-	Log.i("EPU Immagine", ""+mmmg);
+//	TextView mmmg = (TextView)findViewById(R.id.description);
+//	Log.i("EPU Immagine", ""+mmmg);
 //	img.setImageResource(R.drawable.ic_launcher);
 	itemizedOverlay = new ItemizeOverlay(drawable,this);
 

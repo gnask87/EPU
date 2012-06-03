@@ -45,6 +45,9 @@ public class EpuActivity extends ListActivity {
   private Double longi;
   private Double lati;
   
+  private String label;
+  private String fullpath;
+  
   public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	loading = new ProgressDialog(this); 
@@ -178,7 +181,7 @@ public class EpuActivity extends ListActivity {
   public boolean onOptionsItemSelected(MenuItem M) {
 	switch (M.getItemId()) {
 	case 1:
-	  // Refresh tag list
+	  // Refresh tag list 
 	  initializeTagList();
 	}
 	return true;
@@ -192,16 +195,26 @@ public class EpuActivity extends ListActivity {
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
 	// call the camera activity with the string tag
-	String label = this.getListAdapter().getItem(position).toString();
+	label = this.getListAdapter().getItem(position).toString();
 	Log.i("EPU", ""+label);
-//	Intent camera = new Intent(this,EpuMaps.class);
-	Intent camera = new Intent(this,EpuReport.class);
-//	camera.putExtra("label", label);
-	camera.putExtra("lati", lati);
-	camera.putExtra("longi", longi);
-	camera.putExtra("label", label);
+	Intent camera = new Intent(this,EpuCamera.class);
 	
-	startActivity(camera);
+	startActivityForResult(camera,EpuCamera.TAKE_PICTURE);
 	super.onListItemClick(l, v, position, id);
 	}
+  
+  public void onActivityResult(int requestCode,int resultCode,Intent data){
+	super.onActivityResult(requestCode,resultCode,data);
+	Log.i("EPU result","RISULTATO");
+	if(resultCode==EpuCamera.TAKE_PICTURE){
+	  fullpath = data.getStringExtra("fullpath");
+	  Log.i("EPU PATH",fullpath);
+	  Intent report = new Intent(this,EpuReport.class);
+	  report.putExtra("lati", lati);
+	  report.putExtra("longi", longi);
+	  report.putExtra("label", label);
+	  report.putExtra("img", fullpath);
+	  startActivity(report);
+	}
+  }
 }

@@ -28,6 +28,7 @@ public class EpuReport extends Activity {
   private String events;
   private EditText desc;
   private EditText user;
+  private String fullpath;
   
   public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
@@ -36,10 +37,12 @@ public class EpuReport extends Activity {
 	lati = this.getIntent().getDoubleExtra("lati", 0);
 	longi = this.getIntent().getDoubleExtra("longi", 0);
 	events = this.getIntent().getStringExtra("label");
-	Log.i("EPU events",""+events);
+	fullpath = this.getIntent().getStringExtra("img");
+	
+	Log.i("EPU fullpath",""+fullpath);
 	
 	ImageView img = (ImageView) findViewById(R.id.image_repo);
-	bpm = BitmapFactory.decodeFile("/sdcard/img.jpg");
+	bpm = BitmapFactory.decodeFile(fullpath);
 	
 	desc = (EditText)findViewById(R.id.description);
 	user = (EditText)findViewById(R.id.usertext);
@@ -73,7 +76,7 @@ public class EpuReport extends Activity {
 			byte[] data = bos.toByteArray();
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpPost postRequest = new HttpPost(remote);
-			ByteArrayBody bab = new ByteArrayBody(data, "/sdcard/img.jpg");
+			ByteArrayBody bab = new ByteArrayBody(data, fullpath);
 			// File file= new File("/mnt/sdcard/forest.png");
 			// FileBody bin = new FileBody(file);
 			MultipartEntity reqEntity = new MultipartEntity(
@@ -88,7 +91,8 @@ public class EpuReport extends Activity {
 			
 		} catch (Exception e) {
 			// handle exception here
-			Log.e(e.getClass().getName(), e.getMessage());
+		  e.printStackTrace();
+			Log.e("EPU multiparts", ""+e.getMessage());
 		}
 	}
 }
