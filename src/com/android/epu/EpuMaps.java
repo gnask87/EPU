@@ -2,15 +2,12 @@ package com.android.epu;
 
 import java.util.List;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -35,10 +32,7 @@ public class EpuMaps extends MapActivity {
 	// istantiate the overlay item
 	mapOverlays = mapView.getOverlays();
 	drawable = this.getResources().getDrawable(R.drawable.ic_launcher);
-//	Bitmap btm = BitmapFactory.decodeFile("/sdcard/img.jpg");
-//	TextView mmmg = (TextView)findViewById(R.id.description);
-//	Log.i("EPU Immagine", ""+mmmg);
-//	img.setImageResource(R.drawable.ic_launcher);
+
 	itemizedOverlay = new ItemizeOverlay(drawable,this);
 
 	View popUp = getLayoutInflater().inflate(R.layout.map_popup, mapView, false);
@@ -73,5 +67,15 @@ public class EpuMaps extends MapActivity {
 	// TODO Auto-generated method stub
 	return false;
   }
+  
+  public boolean onKeyDown(int keyCode, KeyEvent event) {
+    if (keyCode == KeyEvent.KEYCODE_BACK) {
+        moveTaskToBack(false);
+        Intent main = new Intent(this,EpuActivity.class);
+        startActivity(main);
+        return true;
+    }
+    return super.onKeyDown(keyCode, event);
+}
 
 }

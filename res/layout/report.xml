@@ -30,9 +30,9 @@
                 android:id="@+id/usertext"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:ems="10" >
                 android:layout_marginLeft="10dip"
                 android:layout_marginRight="10dip"
+                android:ems="10" >
 
                 <requestFocus />
             </EditText>
@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:onClick="sendRepo"
+                android:onClick="sendReport"
                 android:text="Send report" >
             </Button>
         </LinearLayout>

@@ -198,23 +198,26 @@ public class EpuActivity extends ListActivity {
 	label = this.getListAdapter().getItem(position).toString();
 	Log.i("EPU", ""+label);
 	Intent camera = new Intent(this,EpuCamera.class);
-	
+	camera.putExtra("lati", lati);
+	camera.putExtra("longi", longi);
+	camera.putExtra("label", label);
+	camera.putExtra("img", fullpath);
 	startActivityForResult(camera,EpuCamera.TAKE_PICTURE);
 	super.onListItemClick(l, v, position, id);
 	}
   
   public void onActivityResult(int requestCode,int resultCode,Intent data){
 	super.onActivityResult(requestCode,resultCode,data);
-	Log.i("EPU result","RISULTATO");
-	if(resultCode==EpuCamera.TAKE_PICTURE){
-	  fullpath = data.getStringExtra("fullpath");
-	  Log.i("EPU PATH",fullpath);
-	  Intent report = new Intent(this,EpuReport.class);
-	  report.putExtra("lati", lati);
-	  report.putExtra("longi", longi);
-	  report.putExtra("label", label);
-	  report.putExtra("img", fullpath);
-	  startActivity(report);
-	}
+	Log.i("EPU result","RISULTATO "+requestCode);
+//	if(resultCode==EpuCamera.TAKE_PICTURE){
+//	  fullpath = data.getStringExtra("fullpath");
+//	  Log.i("EPU PATH",fullpath);
+//	  Intent report = new Intent(this,EpuReport.class);
+//	  report.putExtra("lati", lati);
+//	  report.putExtra("longi", longi);
+//	  report.putExtra("label", label);
+//	  report.putExtra("img", fullpath);
+//	  startActivity(report);
+//	}
   }
 }
