@@ -132,8 +132,9 @@ public class EpuActivity extends ListActivity {
    * @return the json formatted tags page
    */
   private String retriveTags() {
-	String hq_host = "http://192.168.1.235:9000/tags";
-//	String hq_host = "http://fmsweng.disi.unitn.it/tropos/json.php";
+	String hq_host = Utils.hq_host + Utils.tags;
+	Log.i("EPU hq_host", hq_host);
+//	String hq_host = "http://tizipic.mine.nu/tags";
 	
 	StringBuilder builder = new StringBuilder();
 	HttpClient client = new DefaultHttpClient();
@@ -198,6 +199,7 @@ public class EpuActivity extends ListActivity {
 //	camera.putExtra("label", label);
 	camera.putExtra("lati", lati);
 	camera.putExtra("longi", longi);
+	camera.putExtra("label", label);
 	
 	startActivity(camera);
 	super.onListItemClick(l, v, position, id);

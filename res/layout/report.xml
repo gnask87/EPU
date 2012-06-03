@@ -20,11 +20,29 @@
             </ImageView>
 
             <TextView
-                android:id="@+id/desc"
+                android:id="@+id/user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="Description" />
+                android:text="User:" />
+
+            <EditText
+                android:id="@+id/usertext"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ems="10" >
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:id="@+id/user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Description:" />
 
             <EditText
                 android:id="@+id/description"
@@ -35,14 +53,15 @@
                 android:gravity="top"
                 android:lines="5"
                 android:singleLine="false" />
+
             <Button
                 android:id="@+id/send"
-                android:text="Send report"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="sendRepo"
                 android:layout_marginLeft="10dp"
-                ></Button>
+                android:onClick="sendRepo"
+                android:text="Send report" >
+            </Button>
         </LinearLayout>
     </ScrollView>
 
