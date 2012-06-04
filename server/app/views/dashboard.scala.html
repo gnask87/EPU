@@ -1,0 +1,113 @@
+
+@main("DashBoard") {
+    
+
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+ 
+      <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+ 
+      <!-- Be sure to leave the brand out there if you want it shown -->
+      <a class="brand" href="#">EPU System</a>
+ 
+ 	<button id="newpost-btt" class="btn btn-success pull-right"><i class="icon-plus-sign icon-white"></i> New Emergency</button>
+      <!-- Everything you want hidden at 940px or less, place within here -->
+      <div class="nav-collapse">
+        <!-- .nav, .navbar-search, .navbar-form, etc -->
+      </div>
+ 
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div id="content">
+<div class="container">
+
+
+
+
+	<!-- NEW TAG -->
+	<div id="newtag-div" class="modal fade">
+		<div class="modal-header">
+		    <a class="close" data-dismiss="modal">&times;</a>
+		    <h3>New TAG</h3>
+		  </div>
+		  <div class="modal-body">
+		  <div id="error-dialog" class="alert alert-error">
+
+			</div>
+		  <form class="well">
+			  <label>TAG:</label>
+			  <input type="text" class="span3" id="newtag-name" placeholder="Type something...">
+			 
+			  <label>Priority:</label><div id="priority-val">1</div><br>
+			  <div id="priority-slider"></div> 
+			</form>
+
+		  </div>
+		  <div class="modal-footer">
+		    <a href="#" class="btn" data-dismiss="modal">Close</a>
+		    <a href="#" class="btn btn-primary" id="newpost-submit">Add TAG</a>
+		  </div>
+	</div>
+
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span2" id="tag-list">
+      
+@*
+    @for(t <- tags) {
+    <div class="tagp-@t.get("priority")">@t.get("label")</div>
+	} 
+	
+*@
+    </div>
+    <div class="span10" align="center">
+    
+    <div id="active-box"></div>
+    
+         <div id="mapC" style="width: 100%; height: 500px;"></div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div id="photo-dialog" title="Preview">
+<p><img id="photo-container" src=""></p>
+<p id="photo-desc"></p>
+</div>
+
+
+
+
+
+
+@*<iframe id="events" src=""></iframe>*@
+<iframe id="events" src="@routes.Application.events("test").unique"></iframe>
+   
+}
